@@ -17,18 +17,15 @@ public class MainController {
     private WebClient.Builder builder = WebClient.builder();
 
     @GetMapping("/{date}")
-    public String getWeatherDataByDate(@PathVariable(value="date") String date)
-    {
-        if(!validator.isValidDate(date))
-        {
+    public String getWeatherDataByDate(@PathVariable(value="date") String date) {
+        if(!validator.isValidDate(date)) {
             return "Date is not valid";
         }
         return "Return all weather data by date:".concat(date);
     }
 
     @Scheduled(fixedRate = 3000)
-    public void getWeatherData()
-    {
+    public void getWeatherData() {
         String uri = API_URL.concat(API_KEY);
         String data = builder.build()
                 .get()
@@ -38,6 +35,4 @@ public class MainController {
                 .block();
         System.out.println(data);
     }
-
-
 }
