@@ -1,6 +1,6 @@
-package repository;
+package app.repository;
 
-import model.WeatherData;
+import app.model.WeatherData;
 import org.springframework.data.repository.CrudRepository;
 
 public interface WeatherDataRepository extends CrudRepository<WeatherData, Integer> {

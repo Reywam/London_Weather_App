@@ -1,19 +1,33 @@
-package model;
+package app.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class WeatherData {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
-    // Айдишники дат хранятся в таблице Dates
-    // TODO Создать связь между двумя таблицами
-    private Integer dateId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_date")
+    private Dates idDate;
+
+    public Dates getIdDate() {
+        return idDate;
+    }
+
+    public void setIdDate(Dates idDate) {
+        this.idDate = idDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     // Координаты
     private Double lon;
@@ -41,14 +55,6 @@ public class WeatherData {
 
     private String timezone;
     private String name;
-
-    public Integer getDateId() {
-        return dateId;
-    }
-
-    public void setDateId(Integer dateId) {
-        this.dateId = dateId;
-    }
 
     public Double getLon() {
         return lon;
@@ -180,5 +186,9 @@ public class WeatherData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 }

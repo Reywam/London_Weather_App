@@ -1,9 +1,8 @@
-package model;
+package app.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Dates {
@@ -12,9 +11,14 @@ public class Dates {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+    @Column(name = "date")
     private LocalDate date;
+
+    @OneToMany(mappedBy = "idDate", fetch = FetchType.LAZY)
+    private List<WeatherData> data;
 
     public LocalDate getDate() {
         return date;

@@ -1,6 +1,6 @@
-package repository;
+package app.repository;
 
-import model.Dates;
+import app.model.Dates;
 import org.springframework.data.repository.CrudRepository;
 
 public interface DatesRepository extends CrudRepository<Dates, Integer> {
