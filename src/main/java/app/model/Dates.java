@@ -18,7 +18,7 @@ public class Dates {
     private LocalDate date;
 
     @OneToMany(mappedBy = "idDate", fetch = FetchType.LAZY)
-    private List<WeatherData> data;
+    private List<WeatherInfo> data;
 
     public LocalDate getDate() {
         return date;
@@ -34,5 +34,13 @@ public class Dates {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<WeatherInfo> getData() {
+        return data;
+    }
+
+    public void setData(List<WeatherInfo> data) {
+        this.data = data;
     }
 }
