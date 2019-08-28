@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.model.*;
+import app.utils.DataHelper;
 import app.utils.Validator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,6 @@ import app.repository.WeatherInfoRepository;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import static app.utils.Constants.API_KEY;
@@ -27,6 +27,7 @@ import static app.utils.Constants.API_URL;
 public class MainController {
     private Validator validator = new Validator();
     private WebClient.Builder builder = WebClient.builder();
+    private DataHelper helper = new DataHelper();
 
     @Autowired
     WeatherInfoRepository weatherInfoRepository;
@@ -35,12 +36,11 @@ public class MainController {
 
     @GetMapping("/{date}")
     public List<WeatherInfo> getWeatherDataByDate(@PathVariable(value="date") String date) throws Exception {
-        if(!validator.isValidDate(date)) {
+        if(!validator.isValidDate(date, helper)) {
             throw new Exception("It's not valid date value. Date pattern is dd.mm.yyyy");
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
-        LocalDate localDate = LocalDate.parse(date, formatter);
+        LocalDate localDate = helper.getLocalDateFromDateString(date);
         Dates dateObject = datesRepository.findByDate(localDate);
         return weatherInfoRepository.findByIdDate(dateObject);
     }

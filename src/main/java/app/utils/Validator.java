@@ -1,30 +1,26 @@
 package app.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static app.utils.Constants.REGEX_DATE_PATTERN;
+
 public class Validator {
+    private Pattern pattern = Pattern.compile(REGEX_DATE_PATTERN);
 
-    private final String DATE_PATTERN = "\\d{2}.\\d{2}.\\d{4}";
-    private Pattern pattern = Pattern.compile(DATE_PATTERN);
-
-    public boolean isValidDate(String date) {
+    public boolean isValidDate(String date, DataHelper helper) {
         Matcher matcher = pattern.matcher(date);
         boolean isValidDatePattern = matcher.matches();
-        if(!isValidDatePattern)
-        {
+        if(!isValidDatePattern) {
             return false;
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
         try
         {
-            LocalDate localDate = LocalDate.parse(date, formatter);
+            helper.getLocalDateFromDateString(date);
         }
         catch (Exception ex)
         {
