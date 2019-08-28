@@ -1,5 +1,9 @@
 package app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +15,7 @@ public class WeatherInfo {
 
     @ManyToOne
     @JoinColumn(name = "id_date")
+    @JsonIgnore
     private Dates idDate;
 
     // Координаты
@@ -39,6 +44,11 @@ public class WeatherInfo {
 
     private Integer timezone;
     private String name;
+
+    public WeatherInfo()
+    {
+
+    }
 
     public WeatherInfo(
             CoordinatesData coordinatesData
@@ -221,5 +231,17 @@ public class WeatherInfo {
 
     public void setTimezone(Integer timezone) {
         this.timezone = timezone;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            result = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

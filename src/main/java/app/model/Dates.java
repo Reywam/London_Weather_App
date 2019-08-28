@@ -1,5 +1,7 @@
 package app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +19,7 @@ public class Dates {
     @Column(name = "date")
     private LocalDate date;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idDate", fetch = FetchType.LAZY)
     private List<WeatherInfo> data;
 

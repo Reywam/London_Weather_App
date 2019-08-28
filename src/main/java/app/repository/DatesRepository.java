@@ -1,6 +1,7 @@
 package app.repository;
 
 import app.model.Dates;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;

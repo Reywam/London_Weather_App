@@ -4,8 +4,6 @@ import app.model.*;
 import app.utils.Validator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.SessionFactory;
-import org.hibernate.engine.spi.SessionDelegatorBaseImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import app.repository.DatesRepository;
 import app.repository.WeatherInfoRepository;
-
-import javax.persistence.EntityManager;
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
-import java.lang.System;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static app.utils.Constants.API_KEY;
 import static app.utils.Constants.API_URL;
@@ -37,14 +34,18 @@ public class MainController {
     DatesRepository datesRepository;
 
     @GetMapping("/{date}")
-    public String getWeatherDataByDate(@PathVariable(value="date") String date) {
+    public List<WeatherInfo> getWeatherDataByDate(@PathVariable(value="date") String date) throws Exception {
         if(!validator.isValidDate(date)) {
-            return "Date is not valid";
+            throw new Exception("It's not valid date value. Date pattern is dd.mm.yyyy");
         }
-        return "Return all weather data by date:".concat(date);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
+        LocalDate localDate = LocalDate.parse(date, formatter);
+        Dates dateObject = datesRepository.findByDate(localDate);
+        return weatherInfoRepository.findByIdDate(dateObject);
     }
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 10000)
     public void getWeatherData() {
         String uri = API_URL.concat(API_KEY);
         String data = builder.build()
@@ -109,6 +110,5 @@ public class MainController {
         }
 
         weatherInfoRepository.save(info);
-        System.out.println(data);
     }
 }
