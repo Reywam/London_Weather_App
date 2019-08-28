@@ -3,6 +3,7 @@ package app;
 import app.model.*;
 import app.repository.DatesRepository;
 import app.repository.WeatherInfoRepository;
+import app.utils.DataHelper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +21,7 @@ public class SchedulesTasks {
     private WebClient.Builder builder = WebClient.builder();
     private WeatherInfoRepository weatherInfoRepository;
     private DatesRepository datesRepository;
+    private DataHelper helper = new DataHelper();
 
     public SchedulesTasks(WeatherInfoRepository weatherInfoRepository, DatesRepository datesRepository) {
         this.weatherInfoRepository = weatherInfoRepository;
@@ -44,39 +46,7 @@ public class SchedulesTasks {
             e.printStackTrace();
         }
 
-        JsonNode coordinatesDataJson = mainNode.get("coord");
-        JsonNode mainDataJson = mainNode.get("main");
-        Integer visibility = mainNode.get("visibility").asInt();
-        JsonNode windDataJson = mainNode.get("wind");
-        JsonNode cloudsJson = mainNode.get("clouds");
-        Integer clouds = cloudsJson.get("all").asInt();
-
-        Double rain = null;
-        if(mainNode.has("rain"))
-        {
-            rain = mainNode.get("rain").asDouble();
-        }
-
-        JsonNode systemDataJson = mainNode.get("sys");
-        Integer timezone = mainNode.get("timezone").asInt();
-        String cityName = mainNode.get("name").asText();
-
-        JsonNode weatherDataJsonArray = mainNode.withArray("weather");
-        JsonNode weatherDataJson = weatherDataJsonArray.get(0);
-
-        CoordinatesData coordinatesData = new CoordinatesData(coordinatesDataJson);
-        MainData mainData = new MainData(mainDataJson, visibility);
-        WeatherData weatherData = new WeatherData(weatherDataJson);
-        WindData windData = new WindData(windDataJson, clouds, rain);
-        SystemData systemData = new SystemData(systemDataJson, timezone, cityName);
-
-        WeatherInfo info = new WeatherInfo(
-                coordinatesData
-                , mainData
-                , weatherData
-                , windData
-                , systemData
-        );
+        WeatherInfo info = helper.createWeatherInfoFromJson(mainNode);
 
         Dates date = new Dates();
         Dates existingDate = datesRepository.findByDate(date.getDate());
