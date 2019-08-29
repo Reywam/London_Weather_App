@@ -19,8 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static app.utils.Constants.API_KEY;
-import static app.utils.Constants.API_URL;
+import static app.utils.Constants.*;
 
 @RestController
 @RequestMapping("/weather")
@@ -36,7 +35,7 @@ public class MainController {
     @GetMapping("/{date}")
     public List<WeatherInfo> getWeatherDataByDate(@PathVariable(value="date") String date) throws Exception {
         if(!validator.isValidDate(date, helper)) {
-            throw new Exception("It's not valid date value. Date pattern is dd.mm.yyyy");
+            throw new Exception("It's not valid date value. Date pattern is ".concat(DATE_PATTERN));
         }
 
         LocalDate localDate = helper.getLocalDateFromDateString(date);

@@ -12,8 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 
-import static app.utils.Constants.API_KEY;
-import static app.utils.Constants.API_URL;
+import static app.utils.Constants.*;
 
 @Component
 public class SchedulesTasks {
@@ -28,12 +27,11 @@ public class SchedulesTasks {
         this.datesRepository = datesRepository;
     }
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(cron = "0 0 * * * *")
     public void getWeatherData() {
-        String uri = API_URL.concat(API_KEY);
         String data = builder.build()
                 .get()
-                .uri(uri)
+                .uri(REQUEST_URI)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
