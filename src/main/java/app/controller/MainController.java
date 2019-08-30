@@ -42,6 +42,4 @@ public class MainController {
         Dates dateObject = datesRepository.findByDate(localDate);
         return weatherInfoRepository.findByIdDate(dateObject);
     }
-
-
 }

@@ -6,8 +6,7 @@ public class WeatherData {
     private String main;
     private String description;
 
-    public WeatherData(JsonNode weatherData)
-    {
+    public WeatherData(JsonNode weatherData) {
         main = weatherData.get("main").asText();
         description = weatherData.get("description").asText();
     }

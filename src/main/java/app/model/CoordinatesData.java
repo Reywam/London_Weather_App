@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class CoordinatesData {
 
-    public CoordinatesData(JsonNode coordinatesJson)
-    {
+    public CoordinatesData(JsonNode coordinatesJson) {
         lon = coordinatesJson.get("lon").asDouble();
         lat = coordinatesJson.get("lat").asDouble();
     }

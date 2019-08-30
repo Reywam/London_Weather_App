@@ -3,9 +3,14 @@ package app.model;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class MainData {
+    private Double temperature;
+    private Integer pressure;
+    private Integer humidity;
+    private Double tempMin;
+    private Double tempMax;
+    private Integer visibility;
 
-    public MainData(JsonNode mainDataJson, Integer visibility)
-    {
+    public MainData(JsonNode mainDataJson, Integer visibility) {
         temperature = mainDataJson.get("temp").asDouble();
         pressure = mainDataJson.get("pressure").asInt();
         humidity = mainDataJson.get("humidity").asInt();
@@ -61,11 +66,4 @@ public class MainData {
     public void setVisibility(Integer visibility) {
         this.visibility = visibility;
     }
-
-    private Double temperature;
-    private Integer pressure;
-    private Integer humidity;
-    private Double tempMin;
-    private Double tempMax;
-    private Integer visibility;
 }

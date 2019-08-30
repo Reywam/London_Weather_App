@@ -45,18 +45,14 @@ public class WeatherInfo {
     private Integer timezone;
     private String name;
 
-    public WeatherInfo()
-    {
-
-    }
+    public WeatherInfo(){}
 
     public WeatherInfo(
             CoordinatesData coordinatesData
             , MainData mainData
             , WeatherData weatherData
             , WindData windData
-            , SystemData systemData)
-    {
+            , SystemData systemData) {
         lon = coordinatesData.getLon();
         lat = coordinatesData.getLat();
 

@@ -48,13 +48,10 @@ public class SchedulesTasks {
 
         Dates date = new Dates();
         Dates existingDate = datesRepository.findByDate(date.getDate());
-        if(existingDate == null)
-        {
+        if(existingDate == null) {
             date = datesRepository.save(date);
             info.setIdDate(date);
-        }
-        else
-        {
+        } else {
             info.setIdDate(existingDate);
         }
 

@@ -8,12 +8,10 @@ public class WindData {
     private Double rain;
     private Integer clouds;
 
-    public WindData(JsonNode windData, Integer clouds, Double rain)
-    {
+    public WindData(JsonNode windData, Integer clouds, Double rain) {
         speed = windData.get("speed").asDouble();
         deg = null;
-        if(windData.has("deg"))
-        {
+        if(windData.has("deg")) {
             deg = windData.get("deg").asInt();
         }
         this.clouds = clouds;

@@ -11,9 +11,7 @@ import static app.utils.Constants.DATE_PATTERN;
 
 public class DataHelper {
 
-    public DataHelper() {
-
-    }
+    public DataHelper() {}
 
     public LocalDate getLocalDateFromDateString(String date) throws ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -29,8 +27,7 @@ public class DataHelper {
         Integer clouds = cloudsJson.get("all").asInt();
 
         Double rain = null;
-        if(json.has("rain"))
-        {
+        if(json.has("rain")) {
             rain = json.get("rain").asDouble();
         }
 

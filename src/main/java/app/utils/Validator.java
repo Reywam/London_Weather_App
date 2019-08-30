@@ -18,12 +18,9 @@ public class Validator {
             return false;
         }
 
-        try
-        {
+        try {
             helper.getLocalDateFromDateString(date);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             return false;
         }
 
